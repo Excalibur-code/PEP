@@ -1,0 +1,73 @@
+*{
+    box-sizing: border-box;
+    border: 1px solid;
+}
+
+body,html{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    height: 100vh;
+    background-color: #353b48;
+    color: white;
+    font-family: sans-serif;
+    border: none;
+}
+
+.top{
+    height: 13%;
+    display: flex;
+    align-items: center;
+}
+
+.btn, .new, .save{
+    min-width: 5rem;
+    height: 3rem;
+    border-radius: 1.1rem;
+    margin-left: 0.5px;
+    margin-right: 0.1px;
+}
+
+.new{
+    background-color: #4cd137;
+}
+
+.save{
+    color: white;
+    background-color: #353b48;
+}
+
+.tabs-container{
+    margin-left: 6px;
+    border: 1px solid green;
+    height: 100%;
+    width: 42rem;
+    text-align: center;
+}
+
+.file-explorer{
+
+}
+
+.main{
+    height: calc(100vh - 13%);
+    border: 1px solid;
+    display: flex;
+}
+
+.content{
+    width: 41rem;
+    border: 1px solid;
+    height: 100%;
+}
+
+.textbox{
+    height: 80%;
+    border: 1px solid;
+}
+
+.terminal{
+    height: 20%;
+}
