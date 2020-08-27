@@ -1,11 +1,16 @@
 console.log("Hello from the background file");
 let blockList = [];
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-     let newEntry = request;
-     console.log(newEntry);
-     blockList.push ({site : newEntry, time :10});
-     console.log(sender);
-     sendResponse(true);
+     if(request.type == "getList") {
+           return sendResponse(blockList);
+     }else{
+           let newEntry = request;
+           console.log(newEntry);
+           blockList.push ({site : newEntry, time :10});
+           console.log(sender);
+           sendResponse(true);  
+     }
+     
 });
 
 //polling
@@ -26,7 +31,7 @@ async function init () {
                             if(blockList[i].time <= 0){
                                      chrome.browserAction.setBadgeText({ text: blockList[i].time + "" });
                                      await removeTab(tab);
-                                     console.log("close tab");
+                                     console.log("tab closed");
                             }
                        }
                  }

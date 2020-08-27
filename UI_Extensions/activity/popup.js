@@ -7,25 +7,43 @@ btn.addEventListener("click",async function () {
      //send message
      let tobeBlocked = input.value;
      if(tobeBlocked){
-          await sendMessage(tobeBlocked);
-          let li = document.createElement("li");
-          li.setAttribute("class", "list-group-item");
-          li.innerHTML = tobeBlocked + '<i class="fas fa-times>"</i>';
-          ul.appendChild(li);
-          input.value = '';
-
-          let i = li.querySelector("i");
-          i.addEventListener("click", function () {
-             i.parentNode.remove(); 
-          })
+           await sendMessage({
+                 type : "url",
+                 link : tobeBlocked
+           });
+           addToList(tobeBlocked);
+           input.value = '';      
      }
 })
 
 //popup
+//IIFEE-immediately invoked function expression => db => UI
+async function init() {
+      let blockList = await sendMessage({ type: "getList" });
+     for (let i = 0; i < blockList.length; i++) {
+         addToList(blockList[i].site);
+     }
+ }
+ init();
+//falsy values => "", null, false, 0, undefined
+//utils
 function sendMessage (tobeBlocked) {
      return new Promise ( function(resolve, reject) {
          chrome.runtime.sendMessage(tobeBlocked, function (response) {
               resolve(response);
          });
      })
+}
+
+function addToList(tobeBlocked) {
+      let li = document.createElement("li");
+      li.setAttribute("class", "list-group-item");
+      li.innerHTML = tobeBlocked + '<i class="fas fa-times>"</i>';
+      ul.appendChild(li);
+
+      let i = li.querySelector("i");
+          i.addEventListener("click", function () {
+                //send message remove 
+                i.parentNode.remove(); 
+          })
 }
