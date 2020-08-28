@@ -1,49 +1,51 @@
-console.log("hello from popup.js");
 let input = document.querySelector("input");
 let ul = document.querySelector("ul");
-let btn = document.querySelector(".btn");
+let button = document.querySelector(".btn");
+// user input 
 
-btn.addEventListener("click",async function () {
-     //send message
-     let tobeBlocked = input.value;
-     if(tobeBlocked){
-           await sendMessage({
-                 type : "url",
-                 link : tobeBlocked
-           });
-           addToList(tobeBlocked);
-           input.value = '';      
-     }
+button.addEventListener("click", async function () {
+    //  send message
+    let toBeBlocked = input.value;
+    if (toBeBlocked) {
+        await sendMessage({
+            type: "url",
+            link: toBeBlocked
+        });
+        
+            addToList(toBeBlocked);
+        input.value = '';
+    }
 })
+// popup
 
-//popup
-//IIFEE-immediately invoked function expression => db => UI
+// IIFEE=> db => ui 
 async function init() {
-      let blockList = await sendMessage({ type: "getList" });
-     for (let i = 0; i < blockList.length; i++) {
-         addToList(blockList[i].site);
-     }
- }
- init();
-//falsy values => "", null, false, 0, undefined
-//utils
-function sendMessage (tobeBlocked) {
-     return new Promise ( function(resolve, reject) {
-         chrome.runtime.sendMessage(tobeBlocked, function (response) {
-              resolve(response);
-         });
-     })
+    let blockList = await sendMessage({ type: "getList" });
+    for (let i = 0; i < blockList.length; i++) {
+        addToList(blockList[i].site);
+    }
 }
-
-function addToList(tobeBlocked) {
-      let li = document.createElement("li");
-      li.setAttribute("class", "list-group-item");
-      li.innerHTML = tobeBlocked + '<i class="fas fa-times>"</i>';
-      ul.appendChild(li);
-
-      let i = li.querySelector("i");
-          i.addEventListener("click", function () {
-                //send message remove 
-                i.parentNode.remove(); 
-          })
+init();
+// falsy values => "",null, false, 0 ,undefined
+// utils
+function sendMessage(message) {
+    return new Promise(function (resolve, reject) {
+        chrome.runtime.sendMessage(message, function (response) {
+            resolve(response)
+        });
+    })
+}
+function addToList(toBeBlocked) {
+    let li = document.createElement("li");
+    li.setAttribute("class", "list-group-item");
+    li.innerHTML = toBeBlocked + '<i class="fas fa-times"></i>';
+    ul.appendChild(li);
+    let i = li.querySelector("i");
+    i.addEventListener("click", async function () {
+        // send message remove
+        let site = i.parentNode.textContent;
+        // console.log(site)
+        await sendMessage({ type: "remove", site });
+        i.parentNode.remove();
+    })
 }
