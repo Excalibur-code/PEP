@@ -1,1 +1,10 @@
-[{"name":"Jasbir","password":12345678,"handle":"adsf","bio":"dsnhfvhmdsagfhsd","email":"jasbir@abc.com","uid":"08fce8c3-b853-487c-ac07-8415380dd69e"}]
+[
+    {
+        "name": "Jasbir",
+        "password": 12345678,
+        "handle": "adsf",
+        "bio": "dsnhfvhmdsagfhsd",
+        "email": "jasbir@abc.com",
+        "uid": "08fce8c3-b853-487c-ac07-8415380dd69e"
+    }
+]
