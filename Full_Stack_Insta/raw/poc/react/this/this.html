@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+      <head>
+             <meta charset="UTF-8">
+             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+             <title>Document</title>         
+      </head>
+
+      <body>
+            <!--this is current object it is determined on run time-->
+             <script>
+                  //console.log(window);
+                  "use strict";
+                  name = "Steve";//we have not used let here so this will be used in the window object. Js assumes we want to access it globaly by default
+                  let obj = {
+                      name : Harsh,
+                      sayHI : function () {
+                          //this => calling object
+                          console.log("Line no 19");
+                          console.log(this);
+                          console.log(this.name);
+                          //it will take this from outrside.
+                         inner =  () => {//arrow function do not have this of its own here it will print this of outer function.
+                              console.log("Line no 23");
+                              console.log(this);
+                          }
+                          inner();//here also window object will be called.It doesn't matter if it is defined inside another object.
+                         // let boundWithObj = inner.bind(obj);
+                         // boundWithObj();
+                      }
+                  }
+                  //method call
+                  obj.sayHI();//at this point value of this is obj.
+                  function fun() {
+                       console.log(this);
+                       console.log(name);//feature=>we can use name here without 
+                       console.log(window.name);
+                       console.log(this.name);
+                  }
+                  //fn call => this => window
+                  //this is function call since no object is called with the fun(). so it will be to window object of the page.
+                  fun();//we haven't send any object so window object will be the default object passed here.
+                  //after the use of strict this will give "undefined" value
+             </script> 
+      </body>
+
+</html>
