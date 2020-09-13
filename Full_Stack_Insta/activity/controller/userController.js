@@ -1,7 +1,6 @@
 const userDB = require("../model/user.json");
 const userModel = require("../model/userModel");
 const userFollowerModel = require("../model/user_followerModel");
-
 const getAllUser = (req, res) => {
     // req paramatere -> user id
     // console.log(req.params);
@@ -11,29 +10,32 @@ const getAllUser = (req, res) => {
     })
 }
 const updateUser = async (req, res) => {
-    //let user = getUserById(req.params.uid);
+    // let user = getUserById(req.params.uid);
     let uid = req.params.uid;
     let toBeUpdatedObj = req.body;
     try {
-           let result = await userModel.update(uid, toBeUpdatedObj);
-           res.status(200).json({
-                  status: "success",
-                  "message": result
-            })
-    } catch (err){
-        console.log(err);
+        let result = await userModel.update(uid, toBeUpdatedObj);
         res.status(200).json({
+            status: "success",
+            "message": result
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
             status: "failure",
-            "message": err.message
+            "message": err.message,
+
         })
     }
-    // user , obj
-    // user.something
-    //for (let key in toBeUpdatedObj) {
-    //    console.log(key);
-    //    user[key] = toBeUpdatedObj[key];
-    //}
-    //fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
+    // // user , obj
+    // // user.something
+    // for (let key in toBeUpdatedObj) {
+    //     console.log(key);
+    //     user[key] = toBeUpdatedObj[key];
+    // }
+    // fs.writeFileSync(path.join(__dirname, "/db/user.json"), JSON.stringify(userDB));
+
+
 }
 const deleteUser = async (req, res) => {
     let cid = req.params.uid;
@@ -101,8 +103,8 @@ const checkBody = function (req, res, next) {
         next();
     }
 }
-// ***********************************************request**********************************
-//send Request
+// ***********************************request*******************************
+// send Request 
 const createRequest = async (req, res) => {
     try {
         let uid = req.body.user_id;
@@ -148,6 +150,22 @@ const getAllFollowers = async (req, res) => {
     }
 
 }
+const getCountOfAllFollowers = async (req, res) => {
+    try {
+        let result = await userFollowerModel.getCountFollowers(req.params.id);
+        res.status(201).json({
+            status: "success",
+            "message": result
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            status: "success",
+            "message": err.message
+        })
+    }
+
+}
 
 module.exports.getAllUser = getAllUser;
 module.exports.updateUser = updateUser;
@@ -157,3 +175,4 @@ module.exports.createUser = createUser;
 module.exports.checkBody = checkBody;
 module.exports.createRequest = createRequest;
 module.exports.getAllFollowers = getAllFollowers;
+module.exports.getCountOfAllFollowers = getCountOfAllFollowers;

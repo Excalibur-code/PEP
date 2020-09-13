@@ -1,4 +1,3 @@
-//the function of this is wriiten in controller and this is used for the CRUD operations
 const connection = require("./connection");
 const { v4: uuidv4 } = require('uuid');
 const util = require("util");
@@ -36,6 +35,19 @@ const acceptRequest = (user_id, follower_id) => {
         })
     })
 }
+const getCountFollowers = (user_id) => {
+    return new Promise(function (resolve, reject) {
+        connection.query(`SELECT COUNT(*) AS followersCount from user_follower WHERE 
+        user_id="${user_id}" AND is_accepted=1`, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result)
+            }
+        })
+    })
+}
 module.exports.addPendingFollower = addPendingFollower;
 module.exports.getAllFollowers = getAllFollowers;
 module.exports.acceptRequest = acceptRequest;
+module.exports.getCountFollowers = getCountFollowers;
