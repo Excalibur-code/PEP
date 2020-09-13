@@ -5,13 +5,13 @@ let follower = document.querySelector(".follower");
 let request = document.querySelector(".request");
 
 btn.addEventListener("click", function (e) {
-    e.preventDefault();
+    e.preventDefault();//works for the default view of the page.
     populateUI(input.value);
     input.value = "";
 })
 async function populateUI(id) {
-    let user = await axios.get(`/api/v1/user/${id}`);
-    let AllFollowers = await axios.get(`/api/v1/user/request/${id}`)
+    let user = await axios.get(`/api/v1/user/${id}`);//for request
+    let AllFollowers = await axios.get(`/api/v1/user/request/${id}`)//
         ;
     let userDataObj = user.data.user;
     let AllFollowersArr = AllFollowers.data.message;
@@ -48,3 +48,7 @@ function addToRequest(requestArr) {
     }
     request.appendChild(ul)
 }
+//if we have to make async request from the browser.
+//Backend has api which helps to make request.In frontend(browser) it has xml http request and fetch api.
+//axios is the wrapper on node which has https request in the backend.It is replcement of postman. it is used if we need to fetch the data without reloading the browser.
+//

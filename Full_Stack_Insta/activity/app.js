@@ -8,6 +8,7 @@ const app = express();
 // // for accepting data in req.body
 //  it will always run
 // user defined
+app.use(express.static("public"));
 app.use(function before(req, res, next) {
     console.log("I will run before express.json");
     console.log(req.body);
@@ -16,18 +17,20 @@ app.use(function before(req, res, next) {
 // user defined middleware
 // it tracks json obj in http body and add it to req.body
 app.use(express.json());
-app.use(function checkBody(req, res, next) {
-    console.log("I will run after express.json");
-    let keysArray = Object.keys(req.body);
-    if (keysArray.length == 0) {
-        res.status(200).json({
-            "status": "failure",
-            "message": "Body Could not be empty"
-        })
-    } else {
-        next();
-    }
-})
+
+//app.use(function checkBody(req, res, next) {
+//    console.log("I will run after express.json");
+//    let keysArray = Object.keys(req.body);
+//    if (keysArray.length == 0) {
+//        res.status(200).json({
+//            "status": "failure",
+//            "message": "Body Could not be empty"
+//        })
+//    } else {
+//        next();
+//    }
+//})
+
 // get => some changing parameter 
 // getOne
 // npm i uuid
@@ -59,7 +62,7 @@ app.use("*", (req, res) => {
 // name,password,handle,image_url,bio,uid,email
 // https://www.flipkart.com/television-store/
 // protocol// web.hostname.subdomain/route 
-app.listen(3000, () => {
+app.listen(4000, () => {
     console.log("Server started at port 3000");
 })
 function getUserById(cUid) {
