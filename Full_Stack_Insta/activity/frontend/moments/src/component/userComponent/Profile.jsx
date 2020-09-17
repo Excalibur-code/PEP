@@ -9,16 +9,16 @@ class Profile extends Component {
         name: "...",
         noOfpost: "Empty",
         followersCount: "Empty",
-        followingCount: "Empty"
+        followingCount: "Empty",    
     }
     //  ui pe print 
     componentDidMount() {
         // getUser
         axios.get("/api/v1/user/1c10a5c8-6627-46d5-a6c9-63886b343310")
             .then((res) => {
-                let { handle, name } = res.data.user
+                let { handle, name, pimg_url } = res.data.user
 
-                this.setState({ handle: handle, name });
+                this.setState({ handle: handle, name, src: pimg_url });
             }).then(() => {
                 return axios.get("/api/v1/user/request/count/1c10a5c8-6627-46d5-a6c9-63886b343310");
             }).then((res) => {

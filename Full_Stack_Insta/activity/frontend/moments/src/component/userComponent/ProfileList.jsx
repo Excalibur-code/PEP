@@ -1,3 +1,4 @@
+//suggestions list
 import React from 'react';
 const ProfileList = (props) => {
     let { list } = props;
