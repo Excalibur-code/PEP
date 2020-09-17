@@ -1,25 +1,26 @@
 const connection = require("./connection");
 const { v4: uuidv4 } = require('uuid');
 const util = require("util");
-//let pQuery = util.promisify(connection.query);//by use of this we need not to wrap the code for promise again and again.
+const factory = require("./factoryModel");
 // query
 // create
-let create = (userObj) => {
-    // insert 
-    userObj.uid = uuidv4();
-    // create user 
-    return new Promise(function (resolve, reject) {
-        connection.query("INSERT INTO user SET ?", userObj, function (err, res) {
-            if (err) {
-                reject(err)
-                return;
-            } else {
-                resolve(res);
-            }
-        })
-    })
-}
+// let create = (userObj) => {
+//     // insert 
+//     userObj.id = uuidv4();
+//     // create user 
+//     return new Promise(function (resolve, reject) {
+//         connection.query(`INSERT INTO ${entity} SET ?`, userObj, function (err, res) {
+//             if (err) {
+//                 reject(err)
+//                 return;
+//             } else {
+//                 resolve(res);
+//             }
+//         })
+//     })
+// }
 
+let create = factory.createFactory("user");
 // getby uid 
 let getById = (uid) => {
     return new Promise(function (resolve, reject) {
@@ -34,31 +35,31 @@ let getById = (uid) => {
             })
     })
 }
-
-// update 
-let update = async (uid, toUpdateObject) => {
-    //console.log(uid);
+// update
+let update = (uid, toUpdateObject) => {
+    // console.log(uid);
     let updateString = '';
     console.log(toUpdateObject);
-    for(let attr in toUpdateObject){
-        console.log(toUpdateObject);
-        updateString += `${attr}="${toUpdateObject[attr]}",`
+    for (let attr in toUpdateObject) {
+        console.log(toUpdateObject[attr]);
+        updateString += `${attr}="${toUpdateObject[attr]}", `
     }
-    console.log(updateString);
-    updateString = updateString.substring(0, updateString.length - 2);
-    // console.log(updateString);
+    console.log(updateString)
+    updateString = updateString.substring(0,
+        updateString.length - 2);
     return new Promise(function (resolve, reject) {
-        connection.query(`UPDATE user SET ${updateString} WHERE uid = "${uid}"`, function (err, result) {
-            if(err){
-                 reject(err);
-            }else {
-                 resolve(result);
-            }
-        });
+        connection.query(`UPDATE user SET 
+        ${updateString} WHERE uid="${uid}"`,
+            function (err, result) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result);
+                }
+            });
     })
 }
-
-let deleteById =  (uid) => {
+let deleteById = (uid) => {
     console.log(uid);
     return new Promise(function (resolve, reject) {
         connection.query(`DELETE from user WHERE uid="${uid}"`,
@@ -70,9 +71,9 @@ let deleteById =  (uid) => {
                 }
             });
     })
-         
-    }
-//delete
+
+}
+// delete
 // send request
 // recieve request
 
