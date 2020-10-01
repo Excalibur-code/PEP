@@ -5,13 +5,13 @@ let follower = document.querySelector(".follower");
 let request = document.querySelector(".request");
 
 btn.addEventListener("click", function (e) {
-    e.preventDefault();//works for the default view of the page.
+    e.preventDefault();
     populateUI(input.value);
     input.value = "";
 })
 async function populateUI(id) {
-    let user = await axios.get(`/api/v1/user/${id}`);//for request
-    let AllFollowers = await axios.get(`/api/v1/user/request/${id}`)//
+    let user = await axios.get(`/api/v1/user/${id}`);
+    let AllFollowers = await axios.get(`/api/v1/user/request/${id}`)
         ;
     let userDataObj = user.data.user;
     let AllFollowersArr = AllFollowers.data.message;

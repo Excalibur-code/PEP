@@ -18,3 +18,4 @@ module.exports.createFactory = function (entity) {
             })
         }
     }
+    

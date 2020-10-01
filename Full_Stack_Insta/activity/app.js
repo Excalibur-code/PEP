@@ -15,6 +15,7 @@ app.use(function before(req, res, next) {
     console.log(req.body);
     next();
 })
+
 // user defined middleware
 // it tracks json obj in http body and add it to req.body
 app.use(express.json());
@@ -60,13 +61,12 @@ app.use("*", (req, res) => {
 // delete a user
 // name,password,handle,image_url,bio,uid,email
 // https://www.flipkart.com/television-store/
-// protocol// web.hostname.subdomain/route 
+// protocol//web.hostname.subdomain/route 
 app.listen(4000, () => {
     console.log("Server started at port 4000");
 })
+
 function getUserById(cUid) {
-
-
     let userArr = userDB.filter((user) => {
         return user.uid == cUid;
     });

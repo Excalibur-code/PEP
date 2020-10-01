@@ -24,7 +24,7 @@ let create = factory.createFactory("user");
 // getby uid 
 let getById = (uid) => {
     return new Promise(function (resolve, reject) {
-        connection.query(`SELECT * from user WHERE uid="${uid}"`,
+        connection.query(`SELECT * from user WHERE id="${uid}"`,
             function (err, res) {
                 if (err) {
                     reject(err)
@@ -39,19 +39,20 @@ let getById = (uid) => {
 let update = (uid, toUpdateObject) => {
     // console.log(uid);
     let updateString = '';
-    console.log(toUpdateObject);
+    // console.log(toUpdateObject);
     for (let attr in toUpdateObject) {
         console.log(toUpdateObject[attr]);
         updateString += `${attr}="${toUpdateObject[attr]}", `
     }
-    console.log(updateString)
     updateString = updateString.substring(0,
         updateString.length - 2);
+        
+        console.log("Line number"+updateString)
     return new Promise(function (resolve, reject) {
-        connection.query(`UPDATE user SET 
-        ${updateString} WHERE uid="${uid}"`,
+        connection.query(`UPDATE user SET ${updateString} WHERE id="${uid}"`,
             function (err, result) {
                 if (err) {
+                    // console.log(err);
                     reject(err)
                 } else {
                     resolve(result);
@@ -62,7 +63,7 @@ let update = (uid, toUpdateObject) => {
 let deleteById = (uid) => {
     console.log(uid);
     return new Promise(function (resolve, reject) {
-        connection.query(`DELETE from user WHERE uid="${uid}"`,
+        connection.query(`DELETE from user WHERE id="${uid}"`,
             function (err, result) {
                 if (err) {
                     reject(err)
